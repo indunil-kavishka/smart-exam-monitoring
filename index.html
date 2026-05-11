@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Exam Attendance Scanner</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f4f7f6; padding: 20px; }
+        #reader { width: 100%; max-width: 400px; margin: auto; border: 2px solid #2ecc71; border-radius: 10px; overflow: hidden; background: white; }
+        .result-box { margin-top: 30px; padding: 20px; border-radius: 10px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none; }
+        h2 { color: #2c3e50; }
+        #student-index { font-size: 24px; font-weight: bold; color: #27ae60; }
+        button { background-color: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h2>Exam Attendance Scanner</h2>
+    <p>Point the camera at the student's QR code</p>
+    
+    <div id="reader"></div>
+    
+    <div id="result" class="result-box">
+        <h4>Student Verified</h4>
+        <p id="student-index"></p>
+        <p style="color: #7f8c8d;">Status: Ready to mark present</p>
+        <button onclick="location.reload()">Scan Next</button>
+    </div>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('student-index').innerText = "Index: " + decodedText;
+            
+
+            alert("Attendance recorded for: " + decodedText);
+            
+            
+            html5QrcodeScanner.clear();
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
+</body>
+</html>
